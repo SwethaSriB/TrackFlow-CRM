@@ -1,0 +1,204 @@
+/* src/components/Dashboard.css */
+.dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+    .dashboard-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    background-color: #e9f5ff; /* Light blue */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+    .metric-card h3 {
+        margin-top: 0;
+        color: #0056b3;
+        font-size: 1.2rem;
+    }
+
+    .metric-card p {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007bff;
+        margin: 10px 0 0;
+    }
+
+    /* Specific colors for metric cards */
+    .metric-card.total-leads {
+        background-color: #e6f7ff;
+    }
+
+        .metric-card.total-leads p {
+            color: #1890ff;
+        }
+
+    .metric-card.total-orders {
+        background-color: #e9fef0;
+    }
+
+        .metric-card.total-orders p {
+            color: #52c41a;
+        }
+
+    .metric-card.followups-due {
+        background-color: #fffbe6;
+    }
+
+        .metric-card.followups-due p {
+            color: #faad14;
+        }
+
+
+.dashboard-sections {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+    .dashboard-sections .card {
+        flex: 1; /* Allow cards to grow and shrink */
+        min-width: 300px; /* Minimum width for each card */
+        background-color: #fefefe;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+        .dashboard-sections .card h3 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dashboard-sections .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            .dashboard-sections .card ul li {
+                padding: 8px 0;
+                border-bottom: 1px dashed #eee;
+                font-size: 1rem;
+                color: #555;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .dashboard-sections .card ul li:last-child {
+                    border-bottom: none;
+                }
+
+/* Overdue Follow-ups Table Styling */
+.overdue-followups {
+    width: 100%;
+    margin-top: 30px;
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+    .overdue-followups h3 {
+        text-align: center;
+        color: #dc3545; /* Red for overdue */
+        margin-bottom: 20px;
+    }
+
+    .overdue-followups table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .overdue-followups th,
+    .overdue-followups td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .overdue-followups th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .overdue-followups .overdue-row {
+        background-color: #fff0f0; /* Light red background for overdue rows */
+    }
+
+        .overdue-followups .overdue-row td {
+            color: #b30000; /* Darker red text */
+        }
+
+    .overdue-followups p {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        margin-top: 15px;
+    }
+
+.error-message {
+    color: #dc3545;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Basic styling for main-nav buttons in App.css if not already there */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+    .main-nav button {
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .main-nav button:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+        .main-nav button.active {
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,123,255,0.2);
+        }
+
+            .main-nav button.active:hover {
+                background-color: #0056b3;
+            }
