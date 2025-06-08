@@ -4,10 +4,11 @@ import './App.css';
 import LeadForm from './components/LeadForm';
 import LeadList from './components/LeadList';
 import OrderList from './components/OrderList';
-import Dashboard from './components/Dashboard'; // NEW: Import Dashboard
-import { fetchLeads as apiFetchLeads } from './api';
+import Dashboard from './components/Dashboard';
+// Only import specific API functions needed by App.js (like fetchLeads)
+import { fetchLeads } from './api';
 
-const API_BASE_URL = 'http://127.0.0.1:8000';
+// REMOVED: const API_BASE_URL = 'http://127.0.0.1:8000'; // No longer needed here
 
 function App() {
     const [leads, setLeads] = useState([]);
@@ -20,7 +21,8 @@ function App() {
         setLoading(true);
         setError(null);
         try {
-            const fetchedLeads = await apiFetchLeads();
+            // apiFetchLeads (now just fetchLeads) internally uses the API_BASE_URL from api.js
+            const fetchedLeads = await fetchLeads();
             setLeads(fetchedLeads);
         } catch (err) {
             console.error("Error fetching leads:", err);
@@ -31,17 +33,19 @@ function App() {
     };
 
     useEffect(() => {
+        // Fetch leads only when 'leads' section is active
         if (activeSection === 'leads') {
             fetchAllLeads();
         }
-    }, [activeSection]);
+        // If Dashboard needs initial data, you'd fetch it when activeSection is 'dashboard'
+    }, [activeSection]); // Depend on activeSection to refetch/load data
 
     const handleLeadAdded = (newLead) => {
-        fetchAllLeads();
+        fetchAllLeads(); // Re-fetch all leads to update the list
     };
 
     const handleLeadUpdated = () => {
-        fetchAllLeads();
+        fetchAllLeads(); // Re-fetch all leads to update the list after an edit/delete
     };
 
     return (
@@ -55,7 +59,7 @@ function App() {
                         className={activeSection === 'dashboard' ? 'active' : ''}
                         onClick={() => setActiveSection('dashboard')}
                     >
-                        Dashboard {/* NEW: Dashboard Button */}
+                        Dashboard
                     </button>
                     <button
                         className={activeSection === 'leads' ? 'active' : ''}
@@ -74,6 +78,7 @@ function App() {
                 {/* Conditional Rendering for Dashboard Section */}
                 {activeSection === 'dashboard' && (
                     <section className="dashboard-section">
+                        {/* Dashboard component does not need apiBaseUrl prop */}
                         <Dashboard />
                     </section>
                 )}
@@ -83,6 +88,7 @@ function App() {
                     <>
                         <section className="add-lead-section card">
                             <h2>Add New Lead</h2>
+                            {/* REMOVED: apiBaseUrl={API_BASE_URL} */}
                             <LeadForm onLeadAdded={handleLeadAdded} />
                         </section>
 
@@ -113,6 +119,7 @@ function App() {
                                     leads={leads}
                                     viewMode={leadViewMode}
                                     onLeadUpdated={handleLeadUpdated}
+                                // REMOVED: apiBaseUrl={API_BASE_URL}
                                 />
                             )}
                         </section>
@@ -122,6 +129,7 @@ function App() {
                 {/* Conditional Rendering for Order Management Section */}
                 {activeSection === 'orders' && (
                     <section className="order-management-section">
+                        {/* OrderList component also does not need apiBaseUrl prop if its functions use api.js */}
                         <OrderList />
                     </section>
                 )}

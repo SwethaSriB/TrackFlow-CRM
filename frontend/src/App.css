@@ -1,263 +1,522 @@
 /* frontend/src/App.css */
+
+/* General App-wide container and header styling */
 .App {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5; /* Light gray background for the whole page */
     min-height: 100vh;
+    padding-bottom: 50px; /* Space for footer */
 }
 
 .App-header {
-    background-color: #282c34;
-    padding: 20px;
+    background-color: #2c3e50; /* Darker header */
     color: white;
-    margin-bottom: 30px;
-    border-radius: 8px;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
+
+    .App-header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        letter-spacing: 1px;
+    }
 
 .container {
+    max-width: 1300px; /* Max width for main content */
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+    .main-nav button {
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.05em;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+
+        .main-nav button:hover {
+            background-color: #dee2e6;
+            color: #333;
+        }
+
+        .main-nav button.active {
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+        }
+
+/* General section styling (like Dashboard, Order Management) */
+.dashboard-section, .order-management-section, .add-lead-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
     max-width: 1200px;
-    margin: 0 auto;
+    text-align: center; /* Adjust as needed for specific content */
 }
 
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-/* Lead Form */
-.lead-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.form-group {
-    text-align: left;
-}
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
+    .dashboard-section h2, .order-management-section h2, .add-lead-section h2, .lead-list-section h2 {
         color: #333;
+        margin-bottom: 25px;
+        font-size: 1.8em;
     }
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box; /* Include padding in width */
+
+/* Lead Form Styling */
+.lead-form {
+    display: grid; /* Use CSS Grid for robust 2-column layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 20px 30px; /* Row gap, Column gap */
+    max-width: 800px; /* Limit form width */
+    margin: 0 auto; /* Center the form within its section */
+}
+
+    /* Individual form groups for labels and inputs */
+    .lead-form .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0; /* Reset margin-bottom as gap handles spacing */
     }
 
-/* DatePicker specific styles to match inputs */
-.react-datepicker__input-container input {
+    .lead-form label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+        font-size: 0.95em;
+    }
+
+    .lead-form input[type="text"],
+    .lead-form input[type="date"],
+    .lead-form textarea,
+    .lead-form select { /* Added select for consistency if you add it later */
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1em;
+        width: 100%; /* Make inputs take full width of their grid column */
+        box-sizing: border-box; /* Include padding and border in element's total width and height */
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .lead-form input[type="text"]:focus,
+        .lead-form input[type="date"]:focus,
+        .lead-form textarea:focus,
+        .lead-form select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+    .lead-form textarea {
+        min-height: 80px; /* Give textarea a good initial height */
+        resize: vertical; /* Allow vertical resizing */
+    }
+
+/* DatePicker specific styling */
+.react-datepicker-wrapper {
     width: 100%;
-    box-sizing: border-box;
 }
 
-.form-group input.input-error,
-.form-group textarea.input-error {
-    border-color: #dc3545; /* Red border for errors */
+.react-datepicker__input-container input {
+    width: 100%; /* Ensure DatePicker input matches other inputs */
 }
 
-.error-message {
+/* Form error messages */
+.lead-form .error-message {
     color: #dc3545;
-    font-size: 0.9em;
+    font-size: 0.85em;
     margin-top: 5px;
-    display: block;
 }
 
-.lead-form button {
-    grid-column: span 2; /* Button spans both columns */
-    padding: 12px 20px;
+.lead-form .input-error {
+    border-color: #dc3545;
+}
+
+/* Submit button styling */
+.lead-form button[type="submit"] {
+    grid-column: 1 / -1; /* Make button span all columns */
     background-color: #007bff;
     color: white;
+    padding: 14px 25px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 1.1em;
     cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    margin-top: 10px; /* Spacing above the button */
 }
 
-    .lead-form button:hover:not(:disabled) {
+    .lead-form button[type="submit"]:hover:not(:disabled) {
         background-color: #0056b3;
+        transform: translateY(-1px);
     }
 
-    .lead-form button:disabled {
-        background-color: #cccccc;
+    .lead-form button[type="submit"]:disabled {
+        background-color: #a0c9f1;
         cursor: not-allowed;
     }
 
-.submit-message {
-    grid-column: span 2;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #28a745; /* Green for success */
+/* Submit messages */
+.lead-form .submit-message {
+    grid-column: 1 / -1; /* Span all columns */
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
 }
 
-/* View Toggle */
+    .lead-form .submit-message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .lead-form .submit-message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+/* View Toggle Buttons (List/Kanban) */
 .view-toggle {
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 25px;
 }
 
     .view-toggle button {
-        padding: 8px 15px;
-        margin: 0 5px;
-        border: 1px solid #007bff;
-        border-radius: 4px;
-        background-color: white;
-        color: #007bff;
+        background-color: #f0f2f5;
+        color: #555;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
+        font-size: 1em;
+        margin: 0 5px;
+        transition: background-color 0.2s, color 0.2s;
     }
 
         .view-toggle button.active {
             background-color: #007bff;
             color: white;
+            border-color: #007bff;
         }
+
+        .view-toggle button:hover:not(.active) {
+            background-color: #e2e6ea;
+            color: #333;
+        }
+
 
 /* Lead List Table View */
-.lead-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.lead-list-section {
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
-    overflow: hidden; /* Ensures rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    max-width: 1200px; /* Wider for tables */
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
 }
 
-    .lead-table th,
-    .lead-table td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
+    .lead-list-section h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+        font-size: 1.8em;
     }
 
-    .lead-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
+.lead-list-container table { /* Class name from LeadList.js component */
+    width: 100%;
+    border-collapse: collapse; /* Remove double borders */
+    margin-top: 20px;
+}
+
+.lead-list-container th,
+.lead-list-container td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle; /* Align content vertically */
+    font-size: 0.9em;
+    color: #333;
+}
+
+.lead-list-container th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+/* Zebra stripping for rows */
+.lead-list-container tbody tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+.lead-list-container tbody tr:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Input/Select/Textarea styling within table cells */
+.lead-list-container td input[type="text"],
+.lead-list-container td input[type="date"],
+.lead-list-container td textarea,
+.lead-list-container td select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.lead-list-container td textarea {
+    min-height: 40px; /* Smaller textarea in table */
+    resize: vertical;
+}
+
+
+/* Table Action Buttons */
+.lead-list-container td button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-right: 5px; /* Spacing between buttons */
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.lead-list-container .btn-edit {
+    background-color: #ffc107; /* Warning yellow */
+    color: #333;
+}
+
+    .lead-list-container .btn-edit:hover {
+        background-color: #e0a800;
+        transform: translateY(-1px);
     }
 
-    .lead-table tr:nth-child(even) {
-        background-color: #f9f9f9;
+.lead-list-container .btn-delete {
+    background-color: #dc3545; /* Danger red */
+    color: white;
+}
+
+    .lead-list-container .btn-delete:hover {
+        background-color: #c82333;
+        transform: translateY(-1px);
     }
 
-    .lead-table tr:hover {
-        background-color: #e9e9e9;
+.lead-list-container .btn-save {
+    background-color: #28a745; /* Success green */
+    color: white;
+}
+
+    .lead-list-container .btn-save:hover {
+        background-color: #218838;
+        transform: translateY(-1px);
     }
 
-    .lead-table select {
-        padding: 8px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
+.lead-list-container .btn-cancel {
+    background-color: #6c757d; /* Secondary gray */
+    color: white;
+}
+
+    .lead-list-container .btn-cancel:hover {
+        background-color: #5a6268;
+        transform: translateY(-1px);
     }
 
-    .lead-table button {
-        padding: 6px 10px;
-        margin-right: 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        background-color: #28a745;
-        color: white;
-        transition: background-color 0.3s;
-    }
-
-        .lead-table button:hover {
-            background-color: #218838;
-        }
-
-/* Kanban View */
+/* Kanban Board Styling */
 .kanban-board {
     display: flex;
-    overflow-x: auto; /* Enable horizontal scrolling if many columns */
     gap: 20px;
-    padding: 20px 0;
+    overflow-x: auto; /* Allow horizontal scrolling if many columns */
+    padding-bottom: 10px; /* Space for scrollbar */
+    align-items: flex-start; /* Align columns to the top */
 }
 
 .kanban-column {
     flex: 0 0 280px; /* Fixed width for columns */
-    background-color: #e9e9e9;
+    background-color: #f0f2f5;
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    min-height: 200px; /* Minimum height for empty columns */
+    display: flex;
+    flex-direction: column;
 }
 
     .kanban-column h3 {
         text-align: center;
         margin-top: 0;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         color: #333;
+        font-size: 1.1em;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 10px;
     }
 
 .kanban-cards {
+    flex-grow: 1; /* Allow cards container to grow */
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    min-height: 50px; /* To make columns visible even if empty */
+    gap: 15px;
 }
 
 .kanban-card {
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 6px;
     padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+
+    .kanban-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
 
     .kanban-card h4 {
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #007bff;
+        font-size: 1.1em;
     }
 
     .kanban-card p {
-        margin-bottom: 5px;
         font-size: 0.9em;
         color: #555;
+        margin-bottom: 5px;
+        line-height: 1.4;
     }
 
-    .kanban-card button {
-        margin-top: 10px;
+.kanban-card-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap; /* Allow buttons to wrap */
+}
+
+    .kanban-card-actions button,
+    .kanban-card-actions select {
         padding: 6px 10px;
-        border: none;
         border-radius: 4px;
+        font-size: 0.8em;
         cursor: pointer;
-        background-color: #007bff;
-        color: white;
-        transition: background-color 0.3s;
+        flex-shrink: 0; /* Prevent buttons from shrinking */
     }
 
-        .kanban-card button:hover {
-            background-color: #0056b3;
+    .kanban-card-actions select {
+        border: 1px solid #ddd;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+/* Kanban Edit Overlay - for when a card is being edited directly on the Kanban board */
+.kanban-edit-overlay {
+    background-color: rgba(255, 255, 255, 0.95);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #007bff;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+    z-index: 10; /* Ensure it's above other cards */
+}
+
+    .kanban-edit-overlay h5 {
+        margin-top: 0;
+        color: #007bff;
+        font-size: 1em;
+    }
+
+    .kanban-edit-overlay .form-group {
+        width: 100%; /* Make input fields full width in overlay */
+    }
+
+    .kanban-edit-overlay input,
+    .kanban-edit-overlay select,
+    .kanban-edit-overlay textarea {
+        width: 100%;
+        box-sizing: border-box; /* Crucial for consistent sizing */
+    }
+
+    .kanban-edit-overlay .btn-save, .kanban-edit-overlay .btn-cancel {
+        width: 48%; /* Adjust button width */
+        margin: 0; /* Override margin from general button styles */
+    }
+
+    .kanban-edit-overlay .form-group {
+        margin-bottom: 10px; /* Spacing for form groups within overlay */
+    }
+
+        .kanban-edit-overlay .form-group label {
+            margin-bottom: 5px;
         }
 
-    .kanban-card .stage-select {
-        width: 100%;
-        padding: 8px;
-        margin-top: 10px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .lead-form {
+        grid-template-columns: 1fr; /* Single column layout for forms on small screens */
+        padding: 20px;
+        gap: 15px;
     }
 
-    .kanban-card label {
+    .lead-list-container table {
         display: block;
-        font-size: 0.9em;
-        margin-top: 8px;
-        margin-bottom: 3px;
-        font-weight: bold;
+        overflow-x: auto;
+        white-space: nowrap; /* Prevent content from wrapping */
     }
+
+    .lead-list-container th, .lead-list-container td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+
+        .lead-list-container td button {
+            padding: 5px 8px;
+            font-size: 0.75em;
+        }
+
+    .kanban-board {
+        flex-wrap: nowrap; /* Keep columns in a row, allow scrolling */
+    }
+
+    .kanban-column {
+        flex: 0 0 250px; /* Slightly smaller fixed width for columns on small screens */
+    }
+}

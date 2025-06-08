@@ -1,10 +1,14 @@
 // frontend/src/components/LeadForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+// REMOVED: import axios from 'axios'; // No longer directly used here
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Don't forget to import CSS
 
-const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
+// Import the createLead function from your api.js file
+import { createLead } from '../api';
+
+// REMOVED apiBaseUrl from the props list
+const LeadForm = ({ onLeadAdded }) => {
     const [formData, setFormData] = useState({
         name: '',
         contact: '',
@@ -17,13 +21,10 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
     const [submitMessage, setSubmitMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const stages = ["New", "Contacted", "Qualified", "Proposal Sent", "Negotiation", "Won", "Lost"];
-
     const validateForm = () => {
         const errors = {};
         if (!formData.name) errors.name = 'Name is required.';
         if (!formData.contact) errors.contact = 'Contact is required.';
-        // Basic email/phone validation can be added here
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contact) && !/^\d{10}$/.test(formData.contact)) {
             errors.contact = 'Must be a valid email or 10-digit phone number.';
         }
@@ -34,7 +35,6 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // Clear error as user types
         if (formErrors[name]) {
             setFormErrors(prev => ({ ...prev, [name]: '' }));
         }
@@ -47,6 +47,7 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitMessage('');
+        setFormErrors({});
         if (!validateForm()) {
             setSubmitMessage('Please correct the form errors.');
             return;
@@ -54,16 +55,17 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
 
         setIsSubmitting(true);
         try {
-            // Prepare data for API: Date needs to be 'YYYY-MM-DD' string
             const dataToSend = {
                 ...formData,
                 follow_up_date: formData.follow_up_date ? formData.follow_up_date.toISOString().split('T')[0] : null,
-                // Stage is default 'New' on backend, so no need to send initially from form
-                // Unless you add a stage selector to the creation form
+                // Assuming backend sets default stage like "New Lead"
             };
 
-            const response = await axios.post(`${apiBaseUrl}/leads/`, dataToSend);
+            // *** CRITICAL CHANGE: Using the imported createLead function ***
+            const response = await createLead(dataToSend);
+
             setSubmitMessage('Lead added successfully!');
+            // Reset form data after successful submission
             setFormData({
                 name: '',
                 contact: '',
@@ -71,11 +73,12 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
                 product_interest: '',
                 follow_up_date: null,
                 notes: '',
-            }); // Clear form
-            onLeadAdded(response.data); // Notify parent component
+            });
+            onLeadAdded(response.data); // Notify App.js to re-fetch leads
         } catch (error) {
             console.error('Error adding lead:', error);
-            setSubmitMessage('Failed to add lead. ' + (error.response?.data?.detail || 'Please try again.'));
+            const errorMessage = error.response?.data?.detail || 'Please try again.';
+            setSubmitMessage('Failed to add lead. ' + errorMessage);
         } finally {
             setIsSubmitting(false);
         }
@@ -150,7 +153,7 @@ const LeadForm = ({ onLeadAdded, apiBaseUrl }) => {
             <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Adding Lead...' : 'Add Lead'}
             </button>
-            {submitMessage && <p className="submit-message">{submitMessage}</p>}
+            {submitMessage && <p className={`submit-message ${submitMessage.includes('successfully') ? 'success' : 'error'}`}>{submitMessage}</p>}
         </form>
     );
 };
